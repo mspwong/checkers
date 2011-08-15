@@ -5,18 +5,18 @@ white_1:
 
 white_2:
   team: white
-  x: 1
-  y: 3
+  x: 3
+  y: 1
 
 white_3:
   team: white
-  x: 1
-  y: 5
+  x: 5
+  y: 1
 
 white_4:
   team: white
-  x: 1
-  y: 7
+  x: 7
+  y: 1
 
 white_5:
   team: white
@@ -25,23 +25,23 @@ white_5:
 
 white_6:
   team: white
-  x: 2
-  y: 4
+  x: 4
+  y: 2
 
 white_7:
   team: white
-  x: 2
-  y: 6
+  x: 6
+  y: 2
 
 white_8:
   team: white
-  x: 2
-  y: 8
+  x: 8
+  y: 2
 
 white_9:
   team: white
-  x: 3
-  y: 1
+  x: 1
+  y: 3
 
 white_10:
   team: white
@@ -50,23 +50,23 @@ white_10:
 
 white_11:
   team: white
-  x: 3
-  y: 5
+  x: 5
+  y: 3
 
 white_12:
   team: white
-  x: 3
-  y: 7
+  x: 7
+  y: 3
 
 red_1:
   team: red
-  x: 6
-  y: 2
+  x: 2
+  y: 6
 
 red_2:
   team: red
-  x: 6
-  y: 4
+  x: 4
+  y: 6
 
 red_3:
   team: red
@@ -75,23 +75,23 @@ red_3:
 
 red_4:
   team: red
-  x: 6
-  y: 8
+  x: 8
+  y: 6
 
 red_5:
   team: red
-  x: 7
-  y: 1
+  x: 1
+  y: 7
 
 red_6:
   team: red
-  x: 7
-  y: 3
+  x: 3
+  y: 7
 
 red_7:
   team: red
-  x: 7
-  y: 5
+  x: 5
+  y: 7
 
 red_8:
   team: red
@@ -100,18 +100,18 @@ red_8:
 
 red_9:
   team: red
-  x: 8
-  y: 2
+  x: 2
+  y: 8
 
 red_10:
   team: red
-  x: 8
-  y: 4
+  x: 4
+  y: 8
 
 red_11:
   team: red
-  x: 8
-  y: 6
+  x: 6
+  y: 8
 
 red_12:
   team: red

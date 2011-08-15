@@ -33,8 +33,11 @@ class Piece < ActiveRecord::Base
   #end
 
   def move_immediate_forward_diagonal
-    #errors.add_to_base("must not move by more 1 row") unless (self.x - self.x.was).abs <= 1
-    #errors.add_to_base("must not move by more 1 column") unless (self.y - self.y.was).abs <= 1
+    if self.team.name == "white"
+      errors.add_to_base('must not move backward') unless (y == y_was+1)  &&  ((x == x_was+1)  || (x == x_was-1))
+    elsif self.team.name == "red"
+      errors.add_to_base('must not move backward') unless (y == y_was-1)  &&  ((x == x_was+1)  || (x == x_was-1))
+    end
   end
 
 end
