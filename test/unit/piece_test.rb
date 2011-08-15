@@ -34,7 +34,7 @@ class PieceTest < ActiveSupport::TestCase
     setup do
       @piece = pieces(:white_12)
     end
-    should "not get far" do
+    should "not get far and not move piece" do
       x = @piece.x
       y = @piece.y
       assert_raise(ArgumentError) { @piece.move(@piece.x, 3.5) }
@@ -57,7 +57,7 @@ class PieceTest < ActiveSupport::TestCase
   end
 
   context "move to light square" do
-    should "not validate" do
+    should "not validate and not move piece" do
       piece = pieces(:white_12)
       x = piece.x
       y = piece.y
