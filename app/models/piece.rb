@@ -12,9 +12,7 @@
 #
 
 class Piece < ActiveRecord::Base
-  VALID_COORDINATES = (1..8)
   belongs_to :team
-
   validate :move_immediate_forward_diagonal, :move_to_unoccupied
 
   def move(x, y)
@@ -25,7 +23,10 @@ class Piece < ActiveRecord::Base
     self.save!
   end
 
+
   private
+
+  VALID_COORDINATES = (1..8)
 
   def move_immediate_forward_diagonal
     if self.team.name == "white"
