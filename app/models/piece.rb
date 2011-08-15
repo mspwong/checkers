@@ -15,7 +15,7 @@ class Piece < ActiveRecord::Base
   VALID_COORDINATES = (1..8)
   belongs_to :team
 
-  validate :move_immediate_forward_diagonal
+  validate :move_immediate_forward_diagonal, :move_to_unoccupied
 
   def move(x, y)
     raise ArgumentError unless x.is_a?(Integer) && y.is_a?(Integer) && VALID_COORDINATES.include?(x) && VALID_COORDINATES.include?(y)
@@ -27,17 +27,17 @@ class Piece < ActiveRecord::Base
 
   private
 
-  #def stay_in_board
-  #  errors.add(:x, 'must stay in board') unless VALID_COORDINATES.include? self.x
-  #  errors.add(:y, 'must stay in board') unless VALID_COORDINATES.include? self.y
-  #end
-
   def move_immediate_forward_diagonal
     if self.team.name == "white"
-      errors.add_to_base('must not move backward') unless (y == y_was+1)  &&  ((x == x_was+1)  || (x == x_was-1))
+      errors.add_to_base('must only move immediately forward and diagonal') unless (y == y_was+1)  &&  ((x == x_was+1)  || (x == x_was-1))
     elsif self.team.name == "red"
-      errors.add_to_base('must not move backward') unless (y == y_was-1)  &&  ((x == x_was+1)  || (x == x_was-1))
+      errors.add_to_base('must only move immediately forward and diagonal') unless (y == y_was-1)  &&  ((x == x_was+1)  || (x == x_was-1))
     end
+  end
+
+  def move_to_unoccupied
+    pieces = Piece.all(:conditions => ["x=? and y=?", x, y])
+    errors.add_to_base('must not move to an occupied square') unless pieces.blank?
   end
 
 end
