@@ -6,7 +6,6 @@ class CreatePieces < ActiveRecord::Migration
       p.integer :y, :null=>false
       p.timestamps :null=>false
     end
-
   end
 
   def self.down
