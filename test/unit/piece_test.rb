@@ -154,27 +154,31 @@ class PieceTest < ActiveSupport::TestCase
     context "by a red piece" do
       should "validate and move" do
         piece = pieces(:red_4)
+        y = piece.y
         assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(7, 5) }
         assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(6, 4) }
-        moved_piece = Piece.find(piece.id)
-        assert_equal 6, moved_piece.x
-        assert_equal 4, moved_piece.y
+        piece.reload
+        assert_equal 6, piece.x
+        assert_equal 4, piece.y
+        assert_not_equal y, piece.y
       end
     end
 
     context "by a white piece" do
       should "validate and move" do
         piece = pieces(:white_12)
+        y = piece.y
         assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(6, 4) }
         assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(5, 5) }
-        moved_piece = Piece.find(piece.id)
-        assert_equal 5, moved_piece.x
-        assert_equal 5, moved_piece.y
+        piece.reload
+        assert_equal 5, piece.x
+        assert_equal 5, piece.y
+        assert_not_equal y, piece.y
       end
     end
   end
 
-  context "play" do
+  context "play sequence" do
     should "allow or block moves when appropriate" do
       piece = pieces(:red_8)
       x = piece.x
