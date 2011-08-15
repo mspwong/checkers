@@ -196,6 +196,7 @@ class PieceTest < ActiveSupport::TestCase
       assert_equal 8, moved_piece.x
       assert_equal 4, moved_piece.y
       assert_not_equal y, moved_piece.y
+      assert_raise(ActiveRecord::RecordInvalid) {piece.move(7, 5)}
 
       assert_raise(ActiveRecord::RecordInvalid) { pieces(:white_12).reload.move(8, 4) }
 
