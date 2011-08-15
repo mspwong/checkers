@@ -12,5 +12,23 @@
 #
 
 class Piece < ActiveRecord::Base
+  VALID_COORDINATES = (1..8)
   belongs_to :team
+
+  before_save :stay_in_board
+
+  def move(x, y)
+    raise ArgumentError unless x.is_a?(Integer) && y.is_a?(Integer)
+
+    self.x = x
+    self.y = y
+    self.save!
+  end
+
+  private
+
+  def stay_in_board
+    (VALID_COORDINATES.include? self.x)  &&  (VALID_COORDINATES.include? self.y)
+  end
+
 end
