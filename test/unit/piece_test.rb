@@ -31,55 +31,113 @@ class PieceTest < ActiveSupport::TestCase
     end
   end
 
-  context "move beyond board" do
-    should "not validate" do
-      piece = pieces(:white_12)
-      assert Piece::VALID_COORDINATES.include? piece.x
-      assert Piece::VALID_COORDINATES.include? piece.y
-      assert_raise(ActiveRecord::RecordNotSaved) { piece.move(piece.x, 9) }
-      assert_raise(ActiveRecord::RecordNotSaved) { piece.move(piece.x, 0) }
-      assert_raise(ActiveRecord::RecordNotSaved) { piece.move(piece.x, -1) }
-      assert_raise(ArgumentError) { piece.move(piece.x, 3.5) }
-      assert_raise(ActiveRecord::RecordNotSaved) { piece.move(9, piece.y) }
-      assert_raise(ActiveRecord::RecordNotSaved) { piece.move(0, piece.y) }
-      assert_raise(ActiveRecord::RecordNotSaved) { piece.move(-1, piece.y) }
-      assert_raise(ArgumentError) { piece.move(3.5, piece.y) }
-      assert_raise(ActiveRecord::RecordNotSaved) { piece.move(4, 9) }
-      assert_raise(ActiveRecord::RecordNotSaved) { piece.move(0, 1) }
+  context "move to invalid position" do
+    setup do
+      @piece = pieces(:white_12)
+    end
+    should "not get far" do
+      assert_raise(ArgumentError) { @piece.move(@piece.x, 3.5) }
+      assert_raise(ArgumentError) { @piece.move(3.5, @piece.y) }
+      assert_raise(ArgumentError) { @piece.move(3.5, 3.5) }
+      assert_raise(ArgumentError) { @piece.move(@piece.x, -1) }
+      assert_raise(ArgumentError) { @piece.move(-1, @piece.y) }
+      assert_raise(ArgumentError) { @piece.move(0, 1) }
+      assert_raise(ArgumentError) { @piece.move("does_not_matter", 1) }
+      assert_raise(ArgumentError) { @piece.move(@piece.x, 9) }
+      assert_raise(ArgumentError) { @piece.move(@piece.x, 0) }
+      assert_raise(ArgumentError) { @piece.move(9, @piece.y) }
+      assert_raise(ArgumentError) { @piece.move(0, @piece.y) }
+      assert_raise(ArgumentError) { @piece.move(9, 9) }
     end
   end
 
+  #context "move outside of board" do
+    #context "horizontally" do
+    #  should "not validate" do
+    #    assert Piece::VALID_COORDINATES.include? @piece.x
+    #    assert Piece::VALID_COORDINATES.include? @piece.y
+    #    assert_raise(ActiveRecord::RecordInvalid) { @piece.move(@piece.x, 9) }
+    #    assert_equal 1, @piece.errors.size
+    #    assert_not_nil @piece.errors.on(:y)
+    #    assert_raise(ActiveRecord::RecordInvalid) { @piece.move(@piece.x, 0) }
+    #    assert_equal 1, @piece.errors.size
+    #    assert_not_nil @piece.errors.on(:y)
+    #  end
+    #
+    #  context "vertically" do
+    #    should "not validate" do
+    #      assert_raise(ActiveRecord::RecordInvalid) { @piece.move(9, @piece.y) }
+    #      assert_equal 1, @piece.errors.size
+    #      assert_not_nil @piece.errors.on(:x)
+    #      assert_raise(ActiveRecord::RecordInvalid) { @piece.move(0, @piece.y) }
+    #      assert_equal 1, @piece.errors.size
+    #      assert_not_nil @piece.errors.on(:x)
+    #    end
+    #  end
+  #
+  #    context "both horizontally and vertically" do
+  #      should "not validate" do
+  #        assert_raise(ActiveRecord::RecordInvalid) { @piece.move(9, 9) }
+  #        assert_equal 2, @piece.errors.size
+  #        assert_not_nil @piece.errors.on(:x)
+  #        assert_not_nil @piece.errors.on(:y)
+  #      end
+  #    end
+  #  end
+  #end
+  #end
+
+  #context "move to light square" do
+  #  should "not validate" do
+  #    piece = pieces(:white_12)
+  #    assert_raise(ActiveRecord::RecordInvalid) { piece.move(4, 4) }
+  #  end
+  #end
+  #
+  #context "move adjacent horizontally (side way)" do
+  #  should "not validate" do
+  #    piece = pieces(:white_12)
+  #    assert_raise(ActiveRecord::RecordInvalid) { piece.move(3, 8) }
+  #  end
+  #end
+  #
+  #context "move adjacent vertically (up and down)" do
+  #  should "not validate" do
+  #    piece = pieces(:white_12)
+  #    assert_raise(ActiveRecord::RecordInvalid) { piece.move(4, 7) }
+  #  end
+  #end
+  #
   #context "move backward" do
   #  context "for red team" do
   #    should "not validate" do
-  #      assert false
+  #      piece = pieces(:red_4)
+  #      assert_nothing_raised piece.move(5, 7)
+  #      assert_raise(ActiveRecord::RecordInvalid) { piece.move(6, 8) }
   #    end
   #  end
   #
   #  context "for white team" do
   #    should "not validate" do
-  #      assert false
+  #      piece = pieces(:white_12)
+  #      assert_nothing_raised piece.move(4, 8)
+  #      assert_raise(ActiveRecord::RecordInvalid) { piece.move(3, 7) }
   #    end
   #  end
   #end
   #
-  #context "move sideway on same row" do
+  #context "move diagonal forward by more than 1 diagonal" do
   #  should "not validate" do
-  #    assert false
+  #    piece = pieces(:white_12)
+  #    assert_raise(ActiveRecord::RecordInvalid) { piece.move(5, 5)}
   #  end
   #end
-  #
-  #context "move to light square" do
-  #  should "not validate" do
-  #    assert false
-  #  end
-  #end
-  #
-  #context "move forward by more than 1 diagonal" do
-  #  should "not validate" do
-  #    assert false
-  #  end
-  #end
+
+
+
+
+
+
   #
   #context "move to occupied square" do
   #  should "not validate" do

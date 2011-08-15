@@ -15,10 +15,10 @@ class Piece < ActiveRecord::Base
   VALID_COORDINATES = (1..8)
   belongs_to :team
 
-  before_save :stay_in_board
+  validate :move_immediate_forward_diagonal
 
   def move(x, y)
-    raise ArgumentError unless x.is_a?(Integer) && y.is_a?(Integer)
+    raise ArgumentError unless x.is_a?(Integer) && y.is_a?(Integer) && VALID_COORDINATES.include?(x) && VALID_COORDINATES.include?(y)
 
     self.x = x
     self.y = y
@@ -27,8 +27,14 @@ class Piece < ActiveRecord::Base
 
   private
 
-  def stay_in_board
-    (VALID_COORDINATES.include? self.x)  &&  (VALID_COORDINATES.include? self.y)
+  #def stay_in_board
+  #  errors.add(:x, 'must stay in board') unless VALID_COORDINATES.include? self.x
+  #  errors.add(:y, 'must stay in board') unless VALID_COORDINATES.include? self.y
+  #end
+
+  def move_immediate_forward_diagonal
+    #errors.add_to_base("must not move by more 1 row") unless (self.x - self.x.was).abs <= 1
+    #errors.add_to_base("must not move by more 1 column") unless (self.y - self.y.was).abs <= 1
   end
 
 end
