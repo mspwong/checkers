@@ -1,4 +1,4 @@
-This application validates a proposed move during a checker game.  It handles only regular moves with the caveat that a piece may not moved into another square that is occupied by another piece of either color.
+This application validates a proposed move during a checker game.  It handles only regular moves with the caveat that a piece may not moved into a square that is occupied by another piece of either color.
 
 The position of all pieces at any given time is persisted in the database.  No performance tuning such as caching is attempted in this solution.
 
