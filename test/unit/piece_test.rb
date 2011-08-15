@@ -188,7 +188,7 @@ class PieceTest < ActiveSupport::TestCase
       assert_equal x, piece.x
       assert_equal y, piece.y
 
-      piece = pieces(:red_4)
+      piece = pieces(:red_4).reload
       y = piece.y
       assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(7, 5) }
       assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(8, 4) }
@@ -197,19 +197,42 @@ class PieceTest < ActiveSupport::TestCase
       assert_equal 4, moved_piece.y
       assert_not_equal y, moved_piece.y
 
-      assert_raise(ActiveRecord::RecordInvalid) { pieces(:white_12).move(8, 4) }
+      assert_raise(ActiveRecord::RecordInvalid) { pieces(:white_12).reload.move(8, 4) }
 
       piece = pieces(:red_8).reload
-      x = piece.x
       y = piece.y
-      assert_equal 7, x
-      assert_equal 7, y
       assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(8, 6) }
       moved_piece = piece.reload
       assert_equal 8, moved_piece.x
       assert_equal 6, moved_piece.y
-      assert_not_equal x, moved_piece.x
       assert_not_equal y, moved_piece.y
+
+      piece = pieces(:white_12).reload
+      y = piece.y
+      assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(6, 4) }
+      assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(5, 5) }
+      piece.reload
+      assert_equal 5, piece.x
+      assert_equal 5, piece.y
+      assert_not_equal y, piece.y
+
+      piece = pieces(:red_2).reload
+      assert_raise(ActiveRecord::RecordInvalid, Exception) { piece.move(5, 5)}
+
+      piece = pieces(:white_8).reload
+      y = piece.y
+      assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(7, 3)}
+      assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(6, 4)}
+      piece.reload
+      assert_equal 6, piece.x
+      assert_equal 4, piece.y
+      assert_not_equal y, piece.y
+      x = piece.x
+      y = piece.y
+      assert_raise(ActiveRecord::RecordInvalid) { piece.move(5,5) }
+      piece.reload
+      assert_equal x, piece.x
+      assert_equal y, piece.y
 
       #   keep playing
     end
