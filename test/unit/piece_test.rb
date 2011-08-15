@@ -10,13 +10,12 @@ class PieceTest < ActiveSupport::TestCase
       assert_equal 24, Piece.all.size
     end
 
-    should "have 12 pieces on each team" do
-      red_team = teams(:red)
-      red_pieces = Piece.find_all_by_team_id(red_team.id)
-      assert_equal 12, red_pieces.size
-      white_team = teams(:white)
-      white_pieces = Piece.all(:conditions => ["team_id = ?", white_team.id])
-      assert_equal 12, white_pieces.size
+    ["red", "white"].each do |team_name|
+      should "have 12 pieces on #{team_name} team" do
+        team = teams(team_name)
+        pieces = Piece.find_all_by_team_id(team.id)
+        assert_equal 12, pieces.size
+      end
     end
 
     should "have all 24 pieces in the correct start positions" do
