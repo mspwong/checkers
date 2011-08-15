@@ -1,3 +1,5 @@
 This application validates a proposed move for a piece during a checker game.  It handles only regular moves with the caveat that a piece may not moved into another square that is occupied another piece of either color.
 
 The position of all pieces at any given time is persisted in the database.  No performance tuning such as caching is attempted in this solution.
+
+The x and y coordinates are taken from the checkers board shown at the top here:  http://www.jimloy.com/checkers/rules2.htm
