@@ -199,7 +199,7 @@ class PieceTest < ActiveSupport::TestCase
 
       assert_raise(ActiveRecord::RecordInvalid) { pieces(:white_12).move(8, 4) }
 
-      piece = pieces(:red_8)
+      piece = pieces(:red_8).reload
       x = piece.x
       y = piece.y
       assert_equal 7, x
