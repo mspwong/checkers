@@ -94,7 +94,7 @@ class PieceTest < ActiveSupport::TestCase
     context "for red team" do
       should "not validate" do
         piece = pieces(:red_4)
-        assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(7, 5) }
+        assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(7, 5) }
         assert_raise(ActiveRecord::RecordInvalid) { piece.move(8, 6) }
         assert_equal 1, piece.errors.size
         assert_equal "base", piece.errors.first[0]
@@ -105,7 +105,7 @@ class PieceTest < ActiveSupport::TestCase
     context "for white team" do
       should "not validate" do
         piece = pieces(:white_12)
-        assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(8, 4) }
+        assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(8, 4) }
         assert_raise(ActiveRecord::RecordInvalid) { piece.move(7, 3) }
         assert_equal 1, piece.errors.size
         assert_equal "base", piece.errors.first[0]
@@ -140,8 +140,8 @@ class PieceTest < ActiveSupport::TestCase
       should "not validate" do
         piece = pieces(:white_12)
         red_4 = pieces(:red_4)
-        assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(6, 4)}
-        assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(7, 5)}
+        assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(6, 4)}
+        assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(7, 5)}
         assert_raise(ActiveRecord::RecordInvalid) { piece.move(red_4.x, red_4.y) }
         assert_equal 1, piece.errors.size
         assert_equal "base", piece.errors.first[0]
@@ -155,8 +155,8 @@ class PieceTest < ActiveSupport::TestCase
       should "validate and move" do
         piece = pieces(:red_4)
         y = piece.y
-        assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(7, 5) }
-        assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(6, 4) }
+        assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(7, 5) }
+        assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(6, 4) }
         piece.reload
         assert_equal 6, piece.x
         assert_equal 4, piece.y
@@ -168,8 +168,8 @@ class PieceTest < ActiveSupport::TestCase
       should "validate and move" do
         piece = pieces(:white_12)
         y = piece.y
-        assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(6, 4) }
-        assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(5, 5) }
+        assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(6, 4) }
+        assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(5, 5) }
         piece.reload
         assert_equal 5, piece.x
         assert_equal 5, piece.y
@@ -190,8 +190,8 @@ class PieceTest < ActiveSupport::TestCase
 
       piece = pieces(:red_4).reload
       y = piece.y
-      assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(7, 5) }
-      assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(8, 4) }
+      assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(7, 5) }
+      assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(8, 4) }
       moved_piece = piece.reload
       assert_equal 8, moved_piece.x
       assert_equal 4, moved_piece.y
@@ -202,7 +202,7 @@ class PieceTest < ActiveSupport::TestCase
 
       piece = pieces(:red_8).reload
       y = piece.y
-      assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(8, 6) }
+      assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(8, 6) }
       moved_piece = piece.reload
       assert_equal 8, moved_piece.x
       assert_equal 6, moved_piece.y
@@ -210,8 +210,8 @@ class PieceTest < ActiveSupport::TestCase
 
       piece = pieces(:white_12).reload
       y = piece.y
-      assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(6, 4) }
-      assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(5, 5) }
+      assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(6, 4) }
+      assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(5, 5) }
       piece.reload
       assert_equal 5, piece.x
       assert_equal 5, piece.y
@@ -222,8 +222,8 @@ class PieceTest < ActiveSupport::TestCase
 
       piece = pieces(:white_8).reload
       y = piece.y
-      assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(7, 3)}
-      assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(6, 4)}
+      assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(7, 3)}
+      assert_nothing_raised(ActiveRecord::RecordInvalid) { piece.move(6, 4)}
       piece.reload
       assert_equal 6, piece.x
       assert_equal 4, piece.y
