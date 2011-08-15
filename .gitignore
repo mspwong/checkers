@@ -1,0 +1,9 @@
+.project
+.idea/
+.idea/*
+*.iws
+log/*.log
+*.log
+db/schema.rb
+public/stylesheets/*
+Gemfile.lock
