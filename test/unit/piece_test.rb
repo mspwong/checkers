@@ -56,7 +56,7 @@ class PieceTest < ActiveSupport::TestCase
       assert_raise(ActiveRecord::RecordInvalid) { piece.move(4, 4) }
       assert_equal 1, piece.errors.size
       assert_equal "base", piece.errors.first[0]
-      assert_equal "must only move immediately forward and diagonal", piece.errors.first[1]
+      assert_equal "must only move immediate forward and diagonal", piece.errors.first[1]
     end
   end
 
@@ -74,7 +74,7 @@ class PieceTest < ActiveSupport::TestCase
       assert_raise(ActiveRecord::RecordInvalid) { piece.move(7, 4) }
       assert_equal 1, piece.errors.size
       assert_equal "base", piece.errors.first[0]
-      assert_equal "must only move immediately forward and diagonal", piece.errors.first[1]
+      assert_equal "must only move immediate forward and diagonal", piece.errors.first[1]
     end
   end
 
@@ -86,7 +86,7 @@ class PieceTest < ActiveSupport::TestCase
         assert_raise(ActiveRecord::RecordInvalid) { piece.move(8, 6) }
         assert_equal 1, piece.errors.size
         assert_equal "base", piece.errors.first[0]
-        assert_equal "must only move immediately forward and diagonal", piece.errors.first[1]
+        assert_equal "must only move immediate forward and diagonal", piece.errors.first[1]
       end
     end
 
@@ -97,7 +97,7 @@ class PieceTest < ActiveSupport::TestCase
         assert_raise(ActiveRecord::RecordInvalid) { piece.move(7, 3) }
         assert_equal 1, piece.errors.size
         assert_equal "base", piece.errors.first[0]
-        assert_equal "must only move immediately forward and diagonal", piece.errors.first[1]
+        assert_equal "must only move immediate forward and diagonal", piece.errors.first[1]
       end
     end
   end
@@ -108,7 +108,7 @@ class PieceTest < ActiveSupport::TestCase
       assert_raise(ActiveRecord::RecordInvalid) { piece.move(5, 5) }
       assert_equal 1, piece.errors.size
       assert_equal "base", piece.errors.first[0]
-      assert_equal "must only move immediately forward and diagonal", piece.errors.first[1]
+      assert_equal "must only move immediate forward and diagonal", piece.errors.first[1]
     end
   end
 
@@ -138,17 +138,33 @@ class PieceTest < ActiveSupport::TestCase
     end
   end
 
-  #context "move forward to next dark square on the board that is not occupied" do
-  #  context "for red team" do
-  #    should "validate and move" do
-  #      assert false
-  #    end
-  #  end
-  #
-  #  context "for white team" do
-  #    should "validate and move" do
-  #      assert false
-  #    end
+  context "move to valid position" do
+    context "by a red piece" do
+      should "validate and move" do
+        piece = pieces(:red_4)
+        assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(7, 5) }
+        assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(6, 4) }
+        moved_piece = Piece.find(piece.id)
+        assert_equal 6, moved_piece.x
+        assert_equal 4, moved_piece.y
+      end
+    end
+
+    context "by a white piece" do
+      should "validate and move" do
+        piece = pieces(:white_12)
+        assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(6, 4) }
+        assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(5, 5) }
+        moved_piece = Piece.find(piece.id)
+        assert_equal 5, moved_piece.x
+        assert_equal 5, moved_piece.y
+      end
+    end
+  end
+
+  #context "just play" do
+  #  should "allow move and block move when appropriate" do
+  #    flunk "not tested"
   #  end
   #end
 

@@ -29,9 +29,9 @@ class Piece < ActiveRecord::Base
 
   def move_immediate_forward_diagonal
     if self.team.name == "white"
-      errors.add_to_base('must only move immediately forward and diagonal') unless (y == y_was+1)  &&  ((x == x_was+1)  || (x == x_was-1))
+      errors.add_to_base('must only move immediate forward and diagonal') unless (y == y_was+1)  &&  ((x == x_was+1)  || (x == x_was-1))
     elsif self.team.name == "red"
-      errors.add_to_base('must only move immediately forward and diagonal') unless (y == y_was-1)  &&  ((x == x_was+1)  || (x == x_was-1))
+      errors.add_to_base('must only move immediate forward and diagonal') unless (y == y_was-1)  &&  ((x == x_was+1)  || (x == x_was-1))
     end
   end
 
