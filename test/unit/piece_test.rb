@@ -35,7 +35,13 @@ class PieceTest < ActiveSupport::TestCase
       @piece = pieces(:white_12)
     end
     should "not get far" do
+      x = @piece.x
+      y = @piece.y
       assert_raise(ArgumentError) { @piece.move(@piece.x, 3.5) }
+      @piece.reload
+      assert_equal x, @piece.x
+      assert_equal y, @piece.y
+
       assert_raise(ArgumentError) { @piece.move(3.5, @piece.y) }
       assert_raise(ArgumentError) { @piece.move(3.5, 3.5) }
       assert_raise(ArgumentError) { @piece.move(@piece.x, -1) }
@@ -53,7 +59,13 @@ class PieceTest < ActiveSupport::TestCase
   context "move to light square" do
     should "not validate" do
       piece = pieces(:white_12)
+      x = piece.x
+      y = piece.y
       assert_raise(ActiveRecord::RecordInvalid) { piece.move(4, 4) }
+      piece.reload
+      assert_equal x, piece.x
+      assert_equal y, piece.y
+
       assert_equal 1, piece.errors.size
       assert_equal "base", piece.errors.first[0]
       assert_equal "must only move immediate forward and diagonal", piece.errors.first[1]
@@ -162,10 +174,41 @@ class PieceTest < ActiveSupport::TestCase
     end
   end
 
-  #context "just play" do
-  #  should "allow move and block move when appropriate" do
-  #    flunk "not tested"
-  #  end
-  #end
+  context "play" do
+    should "allow or block moves when appropriate" do
+      piece = pieces(:red_8)
+      x = piece.x
+      y = piece.y
+      assert_raise(ActiveRecord::RecordInvalid) { piece.move(8, 6) }
+      piece.reload
+      assert_equal x, piece.x
+      assert_equal y, piece.y
+
+      piece = pieces(:red_4)
+      y = piece.y
+      assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(7, 5) }
+      assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(8, 4) }
+      moved_piece = piece.reload
+      assert_equal 8, moved_piece.x
+      assert_equal 4, moved_piece.y
+      assert_not_equal y, moved_piece.y
+
+      assert_raise(ActiveRecord::RecordInvalid) { pieces(:white_12).move(8, 4) }
+
+      piece = pieces(:red_8)
+      x = piece.x
+      y = piece.y
+      assert_equal 7, x
+      assert_equal 7, y
+      assert_nothing_raised(ActiveRecord::RecordInvalid, Exception) { piece.move(8, 6) }
+      moved_piece = piece.reload
+      assert_equal 8, moved_piece.x
+      assert_equal 6, moved_piece.y
+      assert_not_equal x, moved_piece.x
+      assert_not_equal y, moved_piece.y
+
+      #   keep playing
+    end
+  end
 
 end
