@@ -7,3 +7,6 @@ log/*.log
 db/schema.rb
 public/stylesheets/*
 Gemfile.lock
+.DS_Store
+tmp/
+
