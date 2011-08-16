@@ -2,4 +2,18 @@ This application validates a proposed move during a checker game.  It handles on
 
 The position of all pieces at any given time is persisted in the database.  No performance tuning such as caching is attempted in this solution.
 
-The x and y coordinates are taken from the checkers board shown at the top here:  http://www.jimloy.com/checkers/rules2.htm
+The x and y coordinates are taken from the checkers board images shown here:  http://www.jimloy.com/checkers/rules2.htm
+[1,1] denotes the bottom left square
+[8,1] denotes the bottom right square
+[8,1] denotes the top left square
+[8,8] denotes the top right square
+
+The starting board has following fixtures in the following positions:
+pieces(:white_1) in [1,1]
+pieces(:white_4) in [7,1]
+pieces(:white_12) in [7,3]
+pieces(:red_1) in [2,6]
+pieces(:red_4) in [8,6]
+pieces(:red_12) in [8,8]
+
+
